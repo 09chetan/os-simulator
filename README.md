@@ -9,7 +9,7 @@ This is an Operating System simulator implemented in C++ that includes:
 - Interrupt Handling
 
 ## Project Structure
-- `main.cpp` - Main VM simulator code (Phase 2)
+
 - `input_phase2.txt` - Input file with test cases
 - `output.txt` - Generated output file
 
