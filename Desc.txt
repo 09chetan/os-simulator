@@ -1,0 +1,124 @@
+Phase 1 – Virtual Machine Simulation
+
+This program is a simulation of a simple Virtual Machine (VM) that works like a toy operating system. It follows the batch processing model used in classical OS labs.
+
+🔹 What it does:
+
+Reads jobs (program instructions + input data) from an input file.
+
+Loads the program into simulated memory.
+
+Uses registers (IR, R, IC, C) to execute instructions.
+
+Supports a small instruction set:
+
+GD → Read data from input into memory
+
+PD → Write data from memory to output file
+
+LR / SR → Load/Store between register and memory
+
+CR → Compare register and memory, set condition flag
+
+BT → Conditional branch (jump if true)
+
+H → Halt execution
+
+Produces results in output.txt.
+
+🔹 Why Phase 1?
+This is the first step of simulating an OS environment where the VM executes user jobs using basic memory, registers, and system calls (through MOS).
+
+
+
+
+Phase 2 – Virtual Machine with Paging and Error Handling
+
+This program is an extended simulation of a Virtual Machine (VM) with more advanced OS concepts compared to Phase 1. It introduces paging, page tables, error handling, and time/line limits.
+
+🔹 What it does:
+
+Reads jobs (program instructions + data) from an input file.
+
+Allocates page frames for program and data using a page table (simulated memory management).
+
+Executes instructions while mapping virtual addresses → real addresses.
+
+Maintains a Process Control Block (PCB) with fields like:
+
+Job ID
+
+TTL (Total Time Limit)
+
+TLL (Total Line Limit)
+
+TTC (Total Time Counter)
+
+LLC (Line Limit Counter)
+
+🔹 New Features in Phase 2:
+
+Paging & Address Mapping
+
+Uses a page table (PTR) stored in memory.
+
+Instructions use virtual addresses, which are mapped to real addresses using ADDRESSMAP().
+
+If a required page is missing, a Page Fault occurs and is handled.
+
+Instruction Set (same as Phase 1 but with paging support):
+
+GD → Get Data (read input into memory)
+
+PD → Print Data (write memory content to output)
+
+LR/SR → Load/Store between register and memory
+
+CR → Compare register and memory, set condition flag
+
+BT → Conditional jump if comparison flag is true
+
+H → Halt execution
+
+Interrupt Handling (MOS – Master Operating System)
+
+SI (Service Interrupt) → For GD, PD, H
+
+PI (Program Interrupt) → For invalid opcode, invalid operand, page fault
+
+TI (Time Interrupt) → Raised if TTL is exceeded
+
+The MOS decides the correct action depending on SI, PI, TI combination.
+
+Error Handling & Termination
+Different error messages are logged in output.txt:
+
+Out of Data
+
+Line Limit Exceeded
+
+Time Limit Exceeded
+
+Operation Code Error
+
+Operand Error
+
+Invalid Page Fault
+
+Combined errors (e.g., Time Limit + Operand Error)
+
+Along with errors, it prints Job ID, IC, IR, SI, PI, TI, TTC, LLC, TTL, TLL at termination.
+
+Simulation of CPU Time
+
+Each instruction increases TTC (time counter).
+
+When TTC ≥ TTL, a time interrupt (TI=2) occurs → job terminated with error.
+
+🔹 Why Phase 2?
+
+In Phase 1, the VM had direct memory allocation.
+
+In Phase 2, we add memory management with paging and interrupt-driven execution, making it closer to how a real OS works.
+
+This introduces page faults, address translation, and error handling, which are essential for OS-level job execution.
